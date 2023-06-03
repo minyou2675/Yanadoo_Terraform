@@ -1,8 +1,8 @@
-resource "aws_db_subnet_group" "default" {
-  name       = "default"
+resource "aws_db_subnet_group" "db_subnet" {
+  name       = "main"
   subnet_ids = [aws_subnet.private-subnet-1.id,aws_subnet.private-subnet-2.id]
 
   tags = {
-    Name = "subnet-group-default"
+    Name = "subnet-group-db_subnet"
   }
 }
