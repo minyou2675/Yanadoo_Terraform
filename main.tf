@@ -5,7 +5,9 @@ variable "vpc_cidr_blocks" {
 }
 
 module "seoul"{
+
     source = "./modules/seoul"
     vpc_cidr_block  = var.vpc_cidr_blocks[0]
 }
+
 
