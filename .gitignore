@@ -2,4 +2,4 @@
 .terraform*
 planfile
 terraform.*
-vars.tf
+variable.tf

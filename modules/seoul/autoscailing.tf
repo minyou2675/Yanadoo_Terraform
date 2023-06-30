@@ -19,15 +19,15 @@ resource "aws_launch_configuration" "as_conf" {
 
 resource "aws_autoscaling_group" "asg" {
   name                      = "terraform-test"
-  max_size                  = 4
-  min_size                  = 2
+  max_size                  = 1
+  min_size                  = 1
   health_check_grace_period = 300
   health_check_type         = "ALB"
-  desired_capacity          = 3
+  desired_capacity          = 1
   force_delete              = true
   placement_group           = aws_placement_group.apg.id
   launch_configuration      = aws_launch_configuration.as_conf.name
-  vpc_zone_identifier       = [aws_subnet.public-subnet-1.id, aws_subnet.public-subnet-2.id]
+  vpc_zone_identifier       = [aws_subnet.public_subnet[0].id, aws_subnet.public_subnet[1].id]
 
   initial_lifecycle_hook {
     name                 = "lifecycle"

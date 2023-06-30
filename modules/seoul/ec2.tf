@@ -10,29 +10,16 @@ resource "aws_key_pair" "terraform-key-pair" {
   }
 }
 
-resource "aws_instance" "ec2-1" {
+resource "aws_instance" "ec2" {
+  count                  = 2
   ami                    = "ami-081511b9e3af53902"
   instance_type          = "t3.micro"
   key_name               = aws_key_pair.terraform-key-pair.key_name
-  subnet_id              = aws_subnet.public-subnet-1.id
+  subnet_id              = element(aws_subnet.public_subnet.*.id, count.index)  
   vpc_security_group_ids = ["${aws_security_group.sg.id}"]
 
   tags = {
-    Name = "webserver"
-  }
-
-  depends_on = ["aws_internet_gateway.igw"]
-}
-
-resource "aws_instance" "ec2-2" {
-  ami                    = "ami-081511b9e3af53902"
-  instance_type          = "t3.micro"
-  key_name               = aws_key_pair.terraform-key-pair.key_name
-  subnet_id              = aws_subnet.public-subnet-2.id
-  vpc_security_group_ids = ["${aws_security_group.sg.id}"]
-
-  tags = {
-    Name = "webserver"
+    Name = "ec2-${count.index + 1}"
   }
 
   depends_on = ["aws_internet_gateway.igw"]
